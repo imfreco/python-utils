@@ -1,4 +1,5 @@
-import sys, re
+import sys
+import re
 file_name = sys.argv[1]
 pattern = re.compile("([a-zA-Z0-9]{5,})")
 match = pattern.search(file_name)
@@ -44,7 +45,7 @@ for line in file_lines:
 
 call_statement = f'CALL {procedure_name}('
 
-if(has_input_params):
+if has_input_params:
     first_index = input_lines_indexes["first_line"]
     last_index = input_lines_indexes["last_line"]
     input_titles = file_lines[first_index:first_index + 1][0]
@@ -53,7 +54,7 @@ if(has_input_params):
     last_char = ""
 
     for char in input_titles:
-        if(last_char == " " and char != " "):
+        if (last_char == " " and char != " "):
             pointers.append(idx)
         last_char = char
         idx += 1
@@ -62,7 +63,7 @@ if(has_input_params):
     for line in file_lines[first_index + 1:last_index + 1]:
         data_types.append(line[pointers[1]:pointers[2]].strip())
         values.append(line[pointers[3]:].strip())
-        
+
     for index in range(len(values)):
         is_string = "CHAR" in data_types[index]
         if is_string:
@@ -73,17 +74,17 @@ if(has_input_params):
         if index != len(values) - 1:
             call_statement += ", "
 
-if(has_output_params):
-    if(has_input_params):
+if has_output_params:
+    if has_input_params:
         call_statement += ", "
     first_index = output_lines_indexes["first_line"]
     last_index = output_lines_indexes["last_line"]
     output_quant = last_index - first_index
     for index in range(output_quant + 1):
         call_statement += "null"
-        if(index != output_quant):
+        if index != output_quant:
             call_statement += ", "
-        
+
 call_statement += ");"
 
 file_name_to_write = input("Case ID: ")
