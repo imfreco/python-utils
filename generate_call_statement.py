@@ -54,7 +54,7 @@ if has_input_params:
     last_char = ""
 
     for char in input_titles:
-        if (last_char == " " and char != " "):
+        if last_char == " " and char != " ":
             pointers.append(idx)
         last_char = char
         idx += 1
@@ -88,6 +88,7 @@ if has_output_params:
 call_statement += ");"
 
 file_name_to_write = input("Case ID: ")
-file = open(f'{file_name_to_write}.{file_name}.txt', 'w')
+file = open(f'{file_name_to_write}.{procedure_name}.txt',
+            'w', encoding="utf-8")
 file.write(call_statement)
 file.close()
